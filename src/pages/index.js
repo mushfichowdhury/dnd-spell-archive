@@ -18,9 +18,8 @@ import {
 	Grid2 as Grid,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import SchoolIcon from "@mui/icons-material/School";
-import PersonIcon from "@mui/icons-material/Person";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -281,28 +280,20 @@ export default function Home() {
 
 				<footer className={styles.footer}>
 					<IconButton
-						href='https://nextjs.org/learn'
+						href='https://www.linkedin.com/in/mushfi-chowdhury' // Replace with your LinkedIn URL
 						target='_blank'
 						rel='noopener noreferrer'
 						color='primary'>
-						<Image src='/file.svg' alt='File icon' width={16} height={16} />
-						<Typography sx={{ ml: 1 }}>Learn</Typography>
+						<LinkedInIcon />
+						<Typography sx={{ ml: 1 }}>LinkedIn</Typography>
 					</IconButton>
 					<IconButton
-						href='https://vercel.com/templates'
+						href='https://github.com/mushfichowdhury' // Replace with your GitHub URL
 						target='_blank'
 						rel='noopener noreferrer'
 						color='primary'>
-						<Image src='/window.svg' alt='Window icon' width={16} height={16} />
-						<Typography sx={{ ml: 1 }}>Examples</Typography>
-					</IconButton>
-					<IconButton
-						href='https://nextjs.org'
-						target='_blank'
-						rel='noopener noreferrer'
-						color='primary'>
-						<Image src='/globe.svg' alt='Globe icon' width={16} height={16} />
-						<Typography sx={{ ml: 1 }}>Go to nextjs.org →</Typography>
+						<GitHubIcon />
+						<Typography sx={{ ml: 1 }}>GitHub</Typography>
 					</IconButton>
 				</footer>
 			</div>
