@@ -18,9 +18,8 @@ import {
 	Grid2 as Grid,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import SchoolIcon from "@mui/icons-material/School";
-import PersonIcon from "@mui/icons-material/Person";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -32,89 +31,79 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
-export default function Home() {
-	const [spells, setSpells] = useState([]);
-	const [filteredSpells, setFilteredSpells] = useState([]);
-	const [loading, setLoading] = useState(true);
+export async function getStaticProps() {
+	// Fetch all spells
+	const response = await fetch("https://www.dnd5eapi.co/api/spells");
+	const data = await response.json();
+
+	// Fetch details for each spell
+	const spellsDetails = await Promise.all(
+		data.results.map(async (spell) => {
+			const spellRes = await fetch(
+				`https://www.dnd5eapi.co/api/spells/${spell.index}`
+			);
+			return spellRes.json();
+		})
+	);
+
+	// Fetch classes
+	const classesResponse = await fetch("https://www.dnd5eapi.co/api/classes");
+	const classesData = await classesResponse.json();
+	const spellcastingClasses = classesData.results.filter((c) =>
+		[
+			"bard",
+			"cleric",
+			"druid",
+			"paladin",
+			"ranger",
+			"sorcerer",
+			"warlock",
+			"wizard",
+		].includes(c.index)
+	);
+
+	// Fetch spells for each class
+	const classSpells = {};
+	await Promise.all(
+		spellcastingClasses.map(async (c) => {
+			const spellsRes = await fetch(
+				`https://www.dnd5eapi.co/api/classes/${c.index}/spells`
+			);
+			const spellsData = await spellsRes.json();
+			classSpells[c.index] = spellsData.results.map((spell) => spell.index);
+		})
+	);
+
+	return {
+		props: {
+			initialSpells: spellsDetails,
+			initialClasses: spellcastingClasses,
+			initialClassSpells: classSpells,
+		},
+		// Revalidate every 24 hours
+		revalidate: 86400,
+	};
+}
+
+export default function Home({
+	initialSpells,
+	initialClasses,
+	initialClassSpells,
+}) {
+	const [spells, setSpells] = useState(initialSpells);
+	const [filteredSpells, setFilteredSpells] = useState(initialSpells);
+	const [loading, setLoading] = useState(false);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [levelFilter, setLevelFilter] = useState("all");
 	const [schoolFilter, setSchoolFilter] = useState("all");
 	const [classFilter, setClassFilter] = useState("all");
-	const [classSpells, setClassSpells] = useState({});
-	const [classes, setClasses] = useState([]);
+	const [classes] = useState(initialClasses);
+	const [classSpells] = useState(initialClassSpells);
 
-	// Fetch all spells
-	useEffect(() => {
-		const fetchAllSpells = async () => {
-			try {
-				const response = await fetch("https://www.dnd5eapi.co/api/spells");
-				const data = await response.json();
-				const allSpellDetails = await Promise.all(
-					data.results.map(async (spell) => {
-						const detailResponse = await fetch(
-							`https://www.dnd5eapi.co${spell.url}`
-						);
-						return detailResponse.json();
-					})
-				);
-				setSpells(allSpellDetails);
-				setLoading(false);
-			} catch (error) {
-				console.error("Error fetching spells:", error);
-				setLoading(false);
-			}
-		};
-
-		fetchAllSpells();
-	}, []);
-
-	// Fetch classes and their spells
-	useEffect(() => {
-		const fetchClasses = async () => {
-			try {
-				const response = await fetch("https://www.dnd5eapi.co/api/classes");
-				const data = await response.json();
-				const spellcastingClasses = data.results.filter((c) =>
-					[
-						"bard",
-						"cleric",
-						"druid",
-						"paladin",
-						"ranger",
-						"sorcerer",
-						"warlock",
-						"wizard",
-					].includes(c.index)
-				);
-				setClasses(spellcastingClasses);
-
-				// Fetch spells for each class
-				const spellsByClass = {};
-				await Promise.all(
-					spellcastingClasses.map(async (c) => {
-						const spellsResponse = await fetch(
-							`https://www.dnd5eapi.co/api/classes/${c.index}/spells`
-						);
-						const spellsData = await spellsResponse.json();
-						spellsByClass[c.index] = spellsData.results.map(
-							(spell) => spell.index
-						);
-					})
-				);
-				setClassSpells(spellsByClass);
-			} catch (error) {
-				console.error("Error fetching classes:", error);
-			}
-		};
-
-		fetchClasses();
-	}, []);
-
-	// Filter spells
+	// Update useEffect for filtering
 	useEffect(() => {
 		let result = spells;
 
-		// Search filter
 		if (searchTerm) {
 			result = result.filter(
 				(spell) =>
@@ -123,12 +112,10 @@ export default function Home() {
 			);
 		}
 
-		// Level filter
 		if (levelFilter !== "all") {
 			result = result.filter((spell) => spell.level === parseInt(levelFilter));
 		}
 
-		// School filter
 		if (schoolFilter !== "all") {
 			result = result.filter(
 				(spell) =>
@@ -136,7 +123,6 @@ export default function Home() {
 			);
 		}
 
-		// Class filter
 		if (classFilter !== "all") {
 			result = result.filter((spell) =>
 				classSpells[classFilter]?.includes(spell.index)
@@ -281,28 +267,20 @@ export default function Home() {
 
 				<footer className={styles.footer}>
 					<IconButton
-						href='https://nextjs.org/learn'
+						href='https://www.linkedin.com/in/mushfi-chowdhury'
 						target='_blank'
 						rel='noopener noreferrer'
 						color='primary'>
-						<Image src='/file.svg' alt='File icon' width={16} height={16} />
-						<Typography sx={{ ml: 1 }}>Learn</Typography>
+						<LinkedInIcon />
+						<Typography sx={{ ml: 1 }}>LinkedIn</Typography>
 					</IconButton>
 					<IconButton
-						href='https://vercel.com/templates'
+						href='https://github.com/mushfichowdhury'
 						target='_blank'
 						rel='noopener noreferrer'
 						color='primary'>
-						<Image src='/window.svg' alt='Window icon' width={16} height={16} />
-						<Typography sx={{ ml: 1 }}>Examples</Typography>
-					</IconButton>
-					<IconButton
-						href='https://nextjs.org'
-						target='_blank'
-						rel='noopener noreferrer'
-						color='primary'>
-						<Image src='/globe.svg' alt='Globe icon' width={16} height={16} />
-						<Typography sx={{ ml: 1 }}>Go to nextjs.org →</Typography>
+						<GitHubIcon />
+						<Typography sx={{ ml: 1 }}>GitHub</Typography>
 					</IconButton>
 				</footer>
 			</div>
