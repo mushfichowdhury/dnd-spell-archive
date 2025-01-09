@@ -5,7 +5,7 @@
 }
 
 .stickyHeader {
-	position: fixed;
+	/* position: sticky; */
 	top: 0;
 	left: 0;
 	right: 0;
@@ -16,7 +16,7 @@
 }
 
 .main {
-	padding-top: 200px; /* Adjusted for the new header height */
+	padding-top: 20px;
 	flex: 1;
 }
 
@@ -32,6 +32,19 @@
 	gap: 20px;
 	padding: 20px;
 	justify-content: center;
+}
+
+@media (max-width: 600px) {
+	.spellGrid {
+		grid-template-columns: 1fr;
+		gap: 12px;
+		padding: 12px;
+	}
+
+	.spellCardWrapper {
+		min-width: unset;
+		height: auto;
+	}
 }
 
 .spellCardWrapper {

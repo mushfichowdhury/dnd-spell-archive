@@ -213,8 +213,8 @@ const SpellCard = ({ spell }) => {
 							<Chip
 								label={spell.level === 0 ? "Cantrip" : `Level ${spell.level}`}
 								sx={{
-									bgcolor: "#ffd700",
-									color: "#1a1a1a",
+									bgcolor: "black",
+									color: "white",
 									fontWeight: "bold",
 								}}
 							/>

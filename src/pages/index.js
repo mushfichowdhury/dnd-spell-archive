@@ -148,10 +148,10 @@ export default function Home() {
 	return (
 		<>
 			<Head>
-				<title>D&D Spells Database</title>
+				<title>D&D Spells Library</title>
 				<meta
 					name='description'
-					content='D&D 5e Spells Database with search and filters'
+					content='D&D 5e Spells Library with search and filters'
 				/>
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
@@ -164,87 +164,100 @@ export default function Home() {
 						component='h1'
 						gutterBottom
 						sx={{ textAlign: "center", marginBottom: "36px" }}>
-						D&D 5e Spell Tomes
+						D&D 5e Spell Library
 					</Typography>
 
-					<Box sx={{ mb: 3 }}>
+					<Box sx={{ mb: 1 }}>
 						<Grid
 							container
 							spacing={2}
 							alignItems='center'
 							justifyContent='center'
-							sx={{ maxWidth: "800px", margin: "0 auto" }}>
-							<Grid xs={12} sm={6} md={4}>
-								<FormControl fullWidth>
-									<InputLabel>Class</InputLabel>
-									<Select
-										value={classFilter}
-										onChange={(e) => setClassFilter(e.target.value)}
-										label='Class'>
-										<MenuItem value='all'>All Classes</MenuItem>
-										{classes.map((c) => (
-											<MenuItem key={c.index} value={c.index}>
-												{c.name}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-							</Grid>
-							<Grid xs={12} sm={6} md={4}>
-								<FormControl fullWidth>
-									<InputLabel>Level</InputLabel>
-									<Select
-										value={levelFilter}
-										onChange={(e) => setLevelFilter(e.target.value)}
-										label='Level'>
-										<MenuItem value='all'>All Levels</MenuItem>
-										{[...Array(10)].map((_, i) => (
-											<MenuItem key={i} value={i}>
-												{i === 0 ? "Cantrip" : `Level ${i}`}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-							</Grid>
-							<Grid xs={12} sm={6} md={4}>
-								<FormControl fullWidth>
-									<InputLabel>School</InputLabel>
-									<Select
-										value={schoolFilter}
-										onChange={(e) => setSchoolFilter(e.target.value)}
-										label='School'>
-										<MenuItem value='all'>All Schools</MenuItem>
-										{[
-											"Abjuration",
-											"Conjuration",
-											"Divination",
-											"Enchantment",
-											"Evocation",
-											"Illusion",
-											"Necromancy",
-											"Transmutation",
-										].map((school) => (
-											<MenuItem key={school} value={school}>
-												{school}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-							</Grid>
-							<Grid xs={12}>
-								<TextField
-									fullWidth
-									variant='outlined'
-									placeholder='Search spells...'
-									value={searchTerm}
-									onChange={(e) => setSearchTerm(e.target.value)}
-									InputProps={{
-										startAdornment: (
-											<SearchIcon sx={{ mr: 1, color: "text.secondary" }} />
-										),
-									}}
-								/>
-							</Grid>
+							sx={{
+								maxWidth: "1000px",
+								margin: "0 auto",
+							}}>
+							<Box
+								sx={{
+									display: "flex",
+									flexDirection: { xs: "column", sm: "row" },
+									gap: 2,
+									width: "100%",
+									mb: 2,
+								}}>
+								<Box sx={{ width: "100%" }}>
+									<FormControl fullWidth size='small'>
+										<InputLabel>Class</InputLabel>
+										<Select
+											value={classFilter}
+											onChange={(e) => setClassFilter(e.target.value)}
+											label='Class'>
+											<MenuItem value='all'>All Classes</MenuItem>
+											{classes.map((c) => (
+												<MenuItem key={c.index} value={c.index}>
+													{c.name}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Box>
+								<Box sx={{ width: "100%" }}>
+									<FormControl fullWidth size='small'>
+										<InputLabel>Level</InputLabel>
+										<Select
+											value={levelFilter}
+											onChange={(e) => setLevelFilter(e.target.value)}
+											label='Level'>
+											<MenuItem value='all'>All Levels</MenuItem>
+											{[...Array(10)].map((_, i) => (
+												<MenuItem key={i} value={i}>
+													{i === 0 ? "Cantrip" : `Level ${i}`}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Box>
+								<Box sx={{ width: "100%" }}>
+									<FormControl fullWidth size='small'>
+										<InputLabel>School</InputLabel>
+										<Select
+											value={schoolFilter}
+											onChange={(e) => setSchoolFilter(e.target.value)}
+											label='School'>
+											<MenuItem value='all'>All Schools</MenuItem>
+											{[
+												"Abjuration",
+												"Conjuration",
+												"Divination",
+												"Enchantment",
+												"Evocation",
+												"Illusion",
+												"Necromancy",
+												"Transmutation",
+											].map((school) => (
+												<MenuItem key={school} value={school}>
+													{school}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Box>
+								<Box sx={{ width: "100%" }}>
+									<TextField
+										fullWidth
+										variant='outlined'
+										size='small'
+										placeholder='Search spells...'
+										value={searchTerm}
+										onChange={(e) => setSearchTerm(e.target.value)}
+										InputProps={{
+											startAdornment: (
+												<SearchIcon sx={{ mr: 1, color: "text.secondary" }} />
+											),
+										}}
+									/>
+								</Box>
+							</Box>
 						</Grid>
 					</Box>
 				</div>
@@ -283,7 +296,7 @@ export default function Home() {
 						href='https://www.linkedin.com/in/mushfi-chowdhury' // Replace with your LinkedIn URL
 						target='_blank'
 						rel='noopener noreferrer'
-						color='primary'>
+						color='white'>
 						<LinkedInIcon />
 						<Typography sx={{ ml: 1 }}>LinkedIn</Typography>
 					</IconButton>
@@ -291,7 +304,7 @@ export default function Home() {
 						href='https://github.com/mushfichowdhury' // Replace with your GitHub URL
 						target='_blank'
 						rel='noopener noreferrer'
-						color='primary'>
+						color='white'>
 						<GitHubIcon />
 						<Typography sx={{ ml: 1 }}>GitHub</Typography>
 					</IconButton>
