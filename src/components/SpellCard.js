@@ -63,6 +63,7 @@ const SpellCard = ({ spell }) => {
 							color: "white",
 							flex: 1,
 							textAlign: "left",
+							ml: 1,
 						}}>
 						{spell.name}
 					</Typography>
@@ -104,7 +105,7 @@ const SpellCard = ({ spell }) => {
 				<CardContent sx={{ p: "8px !important" }}>
 					<Box
 						sx={{
-							mb: 2,
+							my: 2,
 							display: "flex",
 							flexDirection: "row",
 							gap: "auto",
@@ -117,10 +118,10 @@ const SpellCard = ({ spell }) => {
 							sx={{
 								display: "flex",
 								alignItems: "center",
-								gap: 0.5,
-								fontSize: "0.6rem",
+								gap: 0.65,
+								fontSize: "0.75rem",
 							}}>
-							<AccessTimeIcon sx={{ fontSize: "0.8rem" }} />
+							<AccessTimeIcon sx={{ fontSize: "0.75rem" }} />
 							{spell.casting_time}
 						</Typography>
 						<Typography
@@ -128,47 +129,23 @@ const SpellCard = ({ spell }) => {
 							sx={{
 								display: "flex",
 								alignItems: "center",
-								gap: 0.5,
-								fontSize: "0.6rem",
+								gap: 0.65,
+								fontSize: "0.75rem",
 							}}>
-							<GpsFixedIcon sx={{ fontSize: "0.8rem" }} />
-							{spell.range}
+							<HourglassEmptyIcon sx={{ fontSize: "0.75rem" }} />
+							{spell.duration}
 						</Typography>
 						<Typography
 							variant='caption'
 							sx={{
 								display: "flex",
 								alignItems: "center",
-								gap: 0.5,
-								fontSize: "0.6rem",
+								gap: 0.65,
+								fontSize: "0.75rem",
 							}}>
-							<HourglassEmptyIcon sx={{ fontSize: "0.8rem" }} />
-							{spell.duration}
+							<GpsFixedIcon sx={{ fontSize: "0.75rem" }} />
+							{spell.range}
 						</Typography>
-					</Box>
-
-					<Box
-						sx={{
-							display: "flex",
-							gap: 0.5,
-							flexWrap: "wrap",
-							mb: 1,
-							justifyContent: "center",
-						}}>
-						{spell.components.map((comp) => (
-							<Chip
-								key={comp}
-								label={comp}
-								size='small'
-								variant='outlined'
-								sx={{
-									height: "16px",
-									fontSize: "0.6rem",
-									borderColor: "rgba(255,255,255,0.3)",
-									"& .MuiChip-label": { px: 1 },
-								}}
-							/>
-						))}
 					</Box>
 				</CardContent>
 			</Card>
@@ -254,8 +231,8 @@ const SpellCard = ({ spell }) => {
 							sx={{
 								mb: 0.5,
 								display: "flex",
-								flexDirection: "row",
-								gap: 9,
+								flexDirection: { xs: "column", sm: "row" },
+								gap: { xs: 0, sm: 11 },
 							}}>
 							<Box>
 								<Typography
@@ -268,7 +245,33 @@ const SpellCard = ({ spell }) => {
 									sx={{ mb: 1, color: "grey.300" }}>
 									<strong>Casting Time:</strong> {spell.casting_time}
 								</Typography>
-								<Box sx={{ mb: 1, display: "flex", flexDirection: "row" }}>
+								{spell.classes && spell.classes.length > 0 && (
+									<Typography
+										variant='subtitle1'
+										sx={{ mb: 1, color: "grey.300" }}>
+										<strong>Classes:</strong>{" "}
+										{spell.classes.map((c) => c.name).join(", ")}
+									</Typography>
+								)}
+							</Box>
+							<Box>
+								<Typography
+									variant='subtitle1'
+									sx={{ mb: 1, color: "grey.300" }}>
+									<strong>Range:</strong> {spell.range}
+								</Typography>
+								<Typography
+									variant='subtitle1'
+									sx={{ mb: 1, color: "grey.300" }}>
+									<strong>Duration:</strong> {spell.duration}
+								</Typography>
+								<Box
+									sx={{
+										mb: { xs: 0.5, sm: 1 },
+										display: "flex",
+										flexDirection: "row",
+										alignContent: "center",
+									}}>
 									<Typography
 										variant='subtitle1'
 										sx={{ mb: 1, color: "grey.300" }}>
@@ -303,26 +306,6 @@ const SpellCard = ({ spell }) => {
 										})}
 									</Box>
 								</Box>
-							</Box>
-							<Box>
-								<Typography
-									variant='subtitle1'
-									sx={{ mb: 1, color: "grey.300" }}>
-									<strong>Range:</strong> {spell.range}
-								</Typography>
-								<Typography
-									variant='subtitle1'
-									sx={{ mb: 1, color: "grey.300" }}>
-									<strong>Duration:</strong> {spell.duration}
-								</Typography>
-								{spell.classes && spell.classes.length > 0 && (
-									<Typography
-										variant='subtitle1'
-										sx={{ mb: 1, color: "grey.300" }}>
-										<strong>Classes:</strong>{" "}
-										{spell.classes.map((c) => c.name).join(", ")}
-									</Typography>
-								)}
 							</Box>
 						</Box>
 
