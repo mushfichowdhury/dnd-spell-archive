@@ -17,6 +17,7 @@ import { useState } from "react";
 
 const SpellCard = ({ spell }) => {
 	const [open, setOpen] = useState(false);
+	console.log(spell);
 
 	const getSchoolColor = (school) => {
 		const schoolColors = {
@@ -184,7 +185,7 @@ const SpellCard = ({ spell }) => {
 						left: "50%",
 						transform: "translate(-50%, -50%)",
 						width: { xs: "90%", sm: "600px" },
-						maxHeight: "90vh",
+						maxHeight: { xs: "70vh", sm: "90vh" },
 						bgcolor: "#1a1a1a",
 						border: "2px solid #333",
 						borderRadius: 2,
@@ -249,40 +250,87 @@ const SpellCard = ({ spell }) => {
 								},
 							},
 						}}>
-						<Box sx={{ mb: 3 }}>
-							<Typography variant='subtitle1' sx={{ mb: 1, color: "grey.300" }}>
-								<strong>School:</strong> {spell.school.name}
-							</Typography>
-							<Typography variant='subtitle1' sx={{ mb: 1, color: "grey.300" }}>
-								<strong>Casting Time:</strong> {spell.casting_time}
-							</Typography>
-							<Typography variant='subtitle1' sx={{ mb: 1, color: "grey.300" }}>
-								<strong>Range:</strong> {spell.range}
-							</Typography>
-							<Typography variant='subtitle1' sx={{ mb: 1, color: "grey.300" }}>
-								<strong>Duration:</strong> {spell.duration}
-							</Typography>
-						</Box>
-
-						<Box sx={{ mb: 3 }}>
-							<Typography variant='subtitle1' sx={{ mb: 1, color: "grey.300" }}>
-								<strong>Components:</strong>
-							</Typography>
-							<Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-								{spell.components.map((comp) => (
-									<Chip
-										key={comp}
-										label={comp}
-										variant='outlined'
-										sx={{ color: "grey.300" }}
-									/>
-								))}
+						<Box
+							sx={{
+								mb: 0.5,
+								display: "flex",
+								flexDirection: "row",
+								gap: 9,
+							}}>
+							<Box>
+								<Typography
+									variant='subtitle1'
+									sx={{ mb: 1, color: "grey.300" }}>
+									<strong>School:</strong> {spell.school.name}
+								</Typography>
+								<Typography
+									variant='subtitle1'
+									sx={{ mb: 1, color: "grey.300" }}>
+									<strong>Casting Time:</strong> {spell.casting_time}
+								</Typography>
+								<Box sx={{ mb: 1, display: "flex", flexDirection: "row" }}>
+									<Typography
+										variant='subtitle1'
+										sx={{ mb: 1, color: "grey.300" }}>
+										<strong>Components:</strong>
+									</Typography>
+									<Box sx={{ display: "flex", gap: 1, ml: 1 }}>
+										{spell.components.map((comp) => {
+											const componentNames = {
+												V: "Verbal",
+												S: "Somatic",
+												M: "Material",
+											};
+											return (
+												<Chip
+													key={comp}
+													label={comp}
+													variant='outlined'
+													sx={{
+														color: "grey.300",
+														"&:hover": {
+															bgcolor: "#ffd700",
+															"& .MuiChip-label": {
+																color: "#000",
+																content: `"${componentNames[comp]}"`,
+															},
+															transform: "scale(1.1)",
+															transition: "all 0.2s ease-in-out",
+														},
+													}}
+												/>
+											);
+										})}
+									</Box>
+								</Box>
+							</Box>
+							<Box>
+								<Typography
+									variant='subtitle1'
+									sx={{ mb: 1, color: "grey.300" }}>
+									<strong>Range:</strong> {spell.range}
+								</Typography>
+								<Typography
+									variant='subtitle1'
+									sx={{ mb: 1, color: "grey.300" }}>
+									<strong>Duration:</strong> {spell.duration}
+								</Typography>
+								{spell.classes && spell.classes.length > 0 && (
+									<Typography
+										variant='subtitle1'
+										sx={{ mb: 1, color: "grey.300" }}>
+										<strong>Classes:</strong>{" "}
+										{spell.classes.map((c) => c.name).join(", ")}
+									</Typography>
+								)}
 							</Box>
 						</Box>
 
 						<Divider sx={{ my: 2, bgcolor: "grey.800" }} />
 
-						<Typography variant='h6' sx={{ mb: 2, color: "grey.300" }}>
+						<Typography
+							variant='h6'
+							sx={{ mb: 2, color: "grey.300", fontWeight: "bold" }}>
 							Description
 						</Typography>
 						{spell.desc.map((paragraph, index) => (
@@ -302,7 +350,7 @@ const SpellCard = ({ spell }) => {
 							<>
 								<Typography
 									variant='h6'
-									sx={{ mt: 3, mb: 2, color: "grey.300" }}>
+									sx={{ mt: 3, mb: 2, color: "grey.300", fontWeight: "bold" }}>
 									At Higher Levels
 								</Typography>
 								{spell.higher_level.map((text, index) => (
