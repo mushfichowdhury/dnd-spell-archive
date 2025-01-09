@@ -1,20 +1,21 @@
 {
-  "name": "dnd-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.3.1",
-    "@mui/material": "^6.3.1",
-    "next": "15.1.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  }
+	"name": "dnd-app",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"deploy": "next build && touch out/.nojekyll && git add out/ && git commit -m \"Deploy\" && git subtree push --prefix out origin gh-pages"
+	},
+	"dependencies": {
+		"@emotion/react": "^11.14.0",
+		"@emotion/styled": "^11.14.0",
+		"@mui/icons-material": "^6.3.1",
+		"@mui/material": "^6.3.1",
+		"next": "15.1.4",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	}
 }
