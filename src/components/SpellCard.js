@@ -58,7 +58,7 @@ const SpellCard = ({ spell }) => {
 						variant='subtitle2'
 						sx={{
 							fontWeight: "bold",
-							fontSize: "0.7rem",
+							fontSize: "1rem",
 							color: "white",
 							flex: 1,
 							textAlign: "left",
@@ -101,7 +101,16 @@ const SpellCard = ({ spell }) => {
 				</Box>
 
 				<CardContent sx={{ p: "8px !important" }}>
-					<Box sx={{ mb: 1 }}>
+					<Box
+						sx={{
+							mb: 2,
+							display: "flex",
+							flexDirection: "row",
+							gap: "auto",
+							justifyContent: "space-around",
+							alignItems: "center",
+							alignContent: "center",
+						}}>
 						<Typography
 							variant='caption'
 							sx={{
@@ -109,7 +118,6 @@ const SpellCard = ({ spell }) => {
 								alignItems: "center",
 								gap: 0.5,
 								fontSize: "0.6rem",
-								mb: 0.5,
 							}}>
 							<AccessTimeIcon sx={{ fontSize: "0.8rem" }} />
 							{spell.casting_time}
@@ -121,7 +129,6 @@ const SpellCard = ({ spell }) => {
 								alignItems: "center",
 								gap: 0.5,
 								fontSize: "0.6rem",
-								mb: 0.5,
 							}}>
 							<GpsFixedIcon sx={{ fontSize: "0.8rem" }} />
 							{spell.range}
@@ -139,7 +146,14 @@ const SpellCard = ({ spell }) => {
 						</Typography>
 					</Box>
 
-					<Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mb: 1 }}>
+					<Box
+						sx={{
+							display: "flex",
+							gap: 0.5,
+							flexWrap: "wrap",
+							mb: 1,
+							justifyContent: "center",
+						}}>
 						{spell.components.map((comp) => (
 							<Chip
 								key={comp}
@@ -155,17 +169,6 @@ const SpellCard = ({ spell }) => {
 							/>
 						))}
 					</Box>
-
-					{/* <Typography
-						variant='caption'
-						sx={{
-							display: "block",
-							fontSize: "0.6rem",
-							color: "rgba(255,255,255,0.7)",
-							lineHeight: 1.2,
-						}}>
-						{spell.desc[0]}
-					</Typography> */}
 				</CardContent>
 			</Card>
 
@@ -295,7 +298,7 @@ const SpellCard = ({ spell }) => {
 							</Typography>
 						))}
 
-						{spell.higher_level && (
+						{spell.higher_level && spell.higher_level.length > 0 && (
 							<>
 								<Typography
 									variant='h6'

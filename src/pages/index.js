@@ -185,7 +185,6 @@ export default function Home() {
 										<MenuItem value='all'>All Classes</MenuItem>
 										{classes.map((c) => (
 											<MenuItem key={c.index} value={c.index}>
-												<PersonIcon sx={{ mr: 1 }} />
 												{c.name}
 											</MenuItem>
 										))}
@@ -227,7 +226,6 @@ export default function Home() {
 											"Transmutation",
 										].map((school) => (
 											<MenuItem key={school} value={school}>
-												<SchoolIcon sx={{ mr: 1 }} />
 												{school}
 											</MenuItem>
 										))}
