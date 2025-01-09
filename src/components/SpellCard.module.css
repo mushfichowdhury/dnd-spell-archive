@@ -1,0 +1,15 @@
+.spellCard {
+	width: 200px;
+	height: auto;
+	transition: transform 0.2s, box-shadow 0.2s;
+	border-radius: 8px;
+	background-color: #1a1a1a;
+	color: white;
+	overflow: auto;
+}
+
+.spellCard:hover {
+	transform: scale(1.05);
+	z-index: 1000;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
