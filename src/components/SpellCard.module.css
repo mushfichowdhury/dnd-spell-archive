@@ -13,4 +13,21 @@
 	transform: scale(1.02);
 	z-index: 1000;
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+	animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+	0%,
+	100% {
+		transform: scale(1.02) rotate(0deg);
+	}
+	25% {
+		transform: scale(1.02) rotate(-1deg);
+	}
+	50% {
+		transform: scale(1.02) rotate(0deg);
+	}
+	75% {
+		transform: scale(1.02) rotate(1deg);
+	}
 }
